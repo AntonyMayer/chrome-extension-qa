@@ -1,15 +1,14 @@
 class QAbot {
     constructor() {
         this.selectors = {
-            component: '[data-component]',
-            btn: 'qa__btn',
-            overlay: 'qa__overlay'
+            component: '[data-component]'
         }
         this.components = {
             elements: [...document.querySelectorAll(this.selectors.component)],
             overlays: []
         }
         this.buildOverlays();
+        this.onScreenResize();
     }
 
     visability(state) {
@@ -29,9 +28,11 @@ class QAbot {
     singleOverlay(elm) {
         let params = elm.getBoundingClientRect(),
             correction = window.pageYOffset,
-            overlay = document.createElement('div');
+            overlay = document.createElement('div'),
+            id = elm.dataset.component,
+            scope = elm.dataset.scope || 'local';
 
-        overlay.innerHTML = `<b>ID:</b> ${elm.dataset.component}<br> <b>Scope:</b> ${elm.dataset.scope}`;
+        overlay.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
 
         overlay.setAttribute('style', `
             background: rgba(0,0,0,.8);
@@ -51,5 +52,20 @@ class QAbot {
         `);
 
         return overlay;
+    }
+
+    reset() {
+        this.components.overlays.forEach(overlay => overlay.remove());
+        this.components.overlays = [];
+        window.QActive = false;
+
+        if (!this.components.overlays.length) this.buildOverlays();
+    }
+
+    onScreenResize() {
+        window.addEventListener('resize', _=> {
+            this.visability(0);
+            this.reset();
+        })
     }
 }

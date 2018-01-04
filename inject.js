@@ -1,12 +1,12 @@
 var qabot = qabot ? qabot : new QAbot(),
-    active = active ? true : false;
+    QActive = QActive ? true : false;
 
-if (!active) {
+if (!QActive) {
     qabot.visability(1);
-    active = true;
+    QActive = true;
 } else {
     qabot.visability(0);
-    active = false;
+    QActive = false;
 }
 
 
