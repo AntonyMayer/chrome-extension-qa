@@ -1,12 +1,12 @@
 var bot = new QAbot(),
-    active = false;
+    active = !!JSON.parse(localStorage.getItem('QAbot'));
 
 if (!active) {
     bot.displayAllBtns();
-    active = false;
+    localStorage.setItem('QAbot', 1);
 } else {
     bot.hideAllBtns();
-    active = true;
+    localStorage.setItem('QAbot', 0);
 }
 
 
