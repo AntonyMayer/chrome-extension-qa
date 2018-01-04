@@ -1,11 +1,11 @@
-var bot = new QAbot(),
+var qabot = qabot ? qabot : new QAbot(),
     active = active ? true : false;
 
 if (!active) {
-    bot.show();
+    qabot.show();
     active = true;
 } else {
-    bot.hide();
+    qabot.hide();
     active = false;
 }
 
