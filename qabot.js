@@ -12,14 +12,13 @@ class QAbot {
         this.buildOverlays();
     }
 
-    show() {
-        setTimeout(_=> {
-            this.components.overlays.forEach(overlay => overlay.style.opacity = 1);
+    visability(state) {
+        setTimeout(_ => {
+            this.components.overlays.forEach(overlay => {
+                overlay.style.opacity = state;
+                overlay.style.pointerEvents = state ? 'all' : 'none';
+            });
         }, 0);
-    }
-
-    hide() {
-        this.components.overlays.forEach(overlay => overlay.style.opacity = 0);
     }
 
     buildOverlays() {
@@ -32,13 +31,18 @@ class QAbot {
             correction = window.pageYOffset,
             overlay = document.createElement('div');
 
+        overlay.innerHTML = `<b>ID:</b> ${elm.dataset.component}<br> <b>Scope:</b> ${elm.dataset.scope}`;
+
         overlay.setAttribute('style', `
-            background: rgba(0,0,0,.05);
+            background: rgba(0,0,0,.8);
             border: 1px solid red;
+            color: #fff;
+            font-size: 1rem;
             left: ${params.left}px;
             min-height: ${params.height}px;
             opacity: 0;
-            pointer-events: none;
+            padding-left: .5rem;
+            padding-top: .5rem;
             position: absolute;
             top: ${params.top + correction}px;
             transition: all .4s;
