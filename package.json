@@ -1,0 +1,27 @@
+{
+  "name": "chrome-extension-qa",
+  "version": "1.0.0",
+  "description": "Highlight app's components and provide brief description for QA",
+  "main": "index.js",
+  "dependencies": {
+    "react-chrome-extension-boilerplate": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonyMayer/chrome-extension-qa.git"
+  },
+  "keywords": [
+    "qa",
+    "chrome"
+  ],
+  "author": "Anton Kuzniatsou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AntonyMayer/chrome-extension-qa/issues"
+  },
+  "homepage": "https://github.com/AntonyMayer/chrome-extension-qa#readme"
+}
