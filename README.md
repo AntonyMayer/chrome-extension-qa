@@ -10,7 +10,7 @@ Displays component's **ID** and **Scope**.
 1. Clone repo
 2. Install extension https://developer.chrome.com/extensions/getstarted#unpacked
 
-# HTML example
+## HTML example
 
 Following section will be highlighted when extension is used,
 
