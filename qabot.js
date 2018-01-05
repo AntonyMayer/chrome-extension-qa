@@ -70,12 +70,15 @@ class QAbot {
         \*********************/
 
         btn.setAttribute('style', `
-            color: #fff;
+            color: ${this.palette[index]};
             cursor: pointer;
             font-weight: 900;
-            left: .25rem;
+            padding: 1.1rem .25rem 0 .25rem;
             position: absolute;
-            top: .4rem;
+            height: calc(100% - 3px);
+            background: #fff;
+            top: 0;
+            left: 0;
         `);
 
         description.setAttribute('style', `
@@ -83,7 +86,8 @@ class QAbot {
             color: #fff;
             display: inline-block;
             font-size: 1rem;
-            padding: .5rem 1.25rem;
+            margin-bottom: -3px;
+            padding: .5rem .5rem .5rem 1.5rem;
             position: relative;
             transition: all .4s;
             vertical-align: middle;
@@ -98,7 +102,7 @@ class QAbot {
             position: fixed;
             top: ${params.top}px;
             transition: all .4s;
-            width: ${params.width}px;
+            min-width: ${params.width}px;
             z-index: 999;
         `);
 
