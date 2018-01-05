@@ -22,3 +22,5 @@ displaying **ID: 503** and **Scope: global**.
     ...
 </section>
 ```
+
+***Note:*** *If scope is not defined **local** will be displayed as default.*
