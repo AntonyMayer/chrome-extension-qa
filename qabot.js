@@ -9,8 +9,9 @@ class QAbot {
             elements: [...document.querySelectorAll('[data-component]')],
             overlays: [] // overlay nodes, will be updated after 'this.buildOverlays' 
         }
+        this.palette = ['red', 'DarkBlue', 'OrangeRed', 'green', 'brown', 'FireBrick', 'GoldenRod'];
         this.buildOverlays();
-        this.onScreenResize();
+        this.onViewPortChange();
     }
 
     /**
@@ -32,7 +33,7 @@ class QAbot {
      * Creates overlays for each 'component' and append them to body
      */
     buildOverlays() {
-        this.components.elements.forEach(elm => this.components.overlays.push(this.singleOverlay(elm)));
+        this.components.elements.forEach((elm, index) => this.components.overlays.push(this.singleOverlay(elm, index)));
         this.components.overlays.forEach(overlay => document.body.appendChild(overlay));
     }
 
@@ -42,27 +43,60 @@ class QAbot {
      * @param {object} elm node
      * @return {object} node
      */
-    singleOverlay(elm) {
+    singleOverlay(elm, index) {
         let params = elm.getBoundingClientRect(),
-            correction = window.pageYOffset,
             overlay = document.createElement('div'),
+            description = document.createElement('div'),            
+            btn = document.createElement('div'),            
             id = elm.dataset.component,
             scope = elm.dataset.scope || 'local';
 
-        overlay.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
+        // normalize palette index
+        if (index >= this.palette.length) index = index % this.palette.length;
+
+        // add hide functionality to btn
+        btn.onclick = _=> { overlay.remove() };
+
+        // add content
+        description.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
+        btn.textContent = 'x';
+
+        // compound overlay
+        description.appendChild(btn);
+        overlay.appendChild(description);
+
+        /*********************\
+        < * Overlay Styling * >
+        \*********************/
+
+        btn.setAttribute('style', `
+            color: #fff;
+            cursor: pointer;
+            font-weight: 900;
+            left: .25rem;
+            position: absolute;
+            top: .4rem;
+        `);
+
+        description.setAttribute('style', `
+            background: ${this.palette[index]};
+            color: #fff;
+            display: inline-block;
+            font-size: 1rem;
+            padding: .5rem 1.25rem;
+            position: relative;
+            transition: all .4s;
+            vertical-align: middle;
+        `);
 
         overlay.setAttribute('style', `
-            background: rgba(0,0,0,.8);
-            border: 1px solid red;
-            color: #fff;
-            font-size: 1rem;
+            background: rgba(0,0,0,.1);        
+            border: 3px solid ${this.palette[index]};
             left: ${params.left}px;
             min-height: ${params.height}px;
             opacity: 0;
-            padding-left: .5rem;
-            padding-top: .5rem;
-            position: absolute;
-            top: ${params.top + correction}px;
+            position: fixed;
+            top: ${params.top}px;
             transition: all .4s;
             width: ${params.width}px;
             z-index: 999;
@@ -75,10 +109,13 @@ class QAbot {
      * Destroys all overlays and builds new ones
      */
     reset() {
+        this.visability(0);
+
         window.QAvisible = false;
         
         this.components.overlays.forEach(overlay => overlay.remove());
         this.components.overlays = [];
+
         this.buildOverlays();
     }
 
@@ -86,10 +123,8 @@ class QAbot {
      * Handle window resize event
      * First hide all overlays, then initiate reset
      */
-    onScreenResize() {
-        window.addEventListener('resize', _=> {
-            this.visability(0);
-            this.reset();
-        })
+    onViewPortChange() {
+        window.addEventListener('resize', this.reset.bind(this));
+        window.addEventListener('scroll', this.reset.bind(this));
     }
 }
