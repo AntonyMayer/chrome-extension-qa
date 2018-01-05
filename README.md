@@ -1,16 +1,16 @@
-#Chrome extension for QA
+# Chrome extension for QA
 
-##Description
+## Description
 Highlights all `components` on current page.
 
 Displays component's **ID** and **Scope**.
 
-##Installation
+## Installation
 
 1. Clone repo
 2. Install extension https://developer.chrome.com/extensions/getstarted#unpacked
 
-#HTML example
+# HTML example
 
 Following section will be highlighted when extension is used,
 
