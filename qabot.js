@@ -47,24 +47,44 @@ class QAbot {
         let params = elm.getBoundingClientRect(),
             overlay = document.createElement('div'),
             description = document.createElement('div'),            
+            btn = document.createElement('div'),            
             id = elm.dataset.component,
             scope = elm.dataset.scope || 'local';
 
         // normalize palette index
         if (index >= this.palette.length) index = index % this.palette.length;
 
-        // append description to overlay
+        // add hide functionality to btn
+        btn.onclick = _=> { overlay.remove() };
+
+        // add content
+        description.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
+        btn.textContent = 'x';
+
+        // compound overlay
+        description.appendChild(btn);
         overlay.appendChild(description);
 
-        description.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
+        /*********************\
+        < * Overlay Styling * >
+        \*********************/
 
-        // styling 
+        btn.setAttribute('style', `
+            color: #fff;
+            cursor: pointer;
+            font-weight: 900;
+            left: .25rem;
+            position: absolute;
+            top: .4rem;
+        `);
+
         description.setAttribute('style', `
             background: ${this.palette[index]};
             color: #fff;
             display: inline-block;
             font-size: 1rem;
-            padding: .5rem;
+            padding: .5rem 1.25rem;
+            position: relative;
             transition: all .4s;
             vertical-align: middle;
         `);
