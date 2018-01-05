@@ -2,7 +2,6 @@
 
 ## Description
 Highlights all `components` on current page.
-
 Displays component's **ID** and **Scope**.
 
 ## Installation
@@ -13,7 +12,6 @@ Displays component's **ID** and **Scope**.
 ## HTML example
 
 Following section will be highlighted when extension is used,
-
 displaying **ID: 503** and **Scope: global**.
 
 
