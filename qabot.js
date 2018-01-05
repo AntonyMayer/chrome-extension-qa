@@ -1,16 +1,24 @@
+/**
+ * Creates a new QAbot
+ * @class
+ * @classdesc Find all 'components' on current page and create overlays
+ */
 class QAbot {
     constructor() {
-        this.selectors = {
-            component: '[data-component]'
-        }
         this.components = {
-            elements: [...document.querySelectorAll(this.selectors.component)],
-            overlays: []
+            elements: [...document.querySelectorAll('[data-component]')],
+            overlays: [] // overlay nodes, will be updated after 'this.buildOverlays' 
         }
         this.buildOverlays();
         this.onScreenResize();
     }
 
+    /**
+     * Set components visability based on 'state' value
+     * Using setTimeout to place it to the very end of queue => smooth css transition
+     * 
+     * @param {number} state visability value, "0" for invisible, "1" for visible
+     */
     visability(state) {
         setTimeout(_ => {
             this.components.overlays.forEach(overlay => {
@@ -20,11 +28,20 @@ class QAbot {
         }, 0);
     }
 
+    /**
+     * Creates overlays for each 'component' and append them to body
+     */
     buildOverlays() {
         this.components.elements.forEach(elm => this.components.overlays.push(this.singleOverlay(elm)));
         this.components.overlays.forEach(overlay => document.body.appendChild(overlay));
     }
 
+    /**
+     * Creates an overlay with necessary properties
+     * 
+     * @param {object} elm node
+     * @return {object} node
+     */
     singleOverlay(elm) {
         let params = elm.getBoundingClientRect(),
             correction = window.pageYOffset,
@@ -54,6 +71,9 @@ class QAbot {
         return overlay;
     }
 
+    /**
+     * Destroys all overlays and builds new ones
+     */
     reset() {
         window.QAvisible = false;
         
@@ -62,6 +82,10 @@ class QAbot {
         this.buildOverlays();
     }
 
+    /**
+     * Handle window resize event
+     * First hide all overlays, then initiate reset
+     */
     onScreenResize() {
         window.addEventListener('resize', _=> {
             this.visability(0);
