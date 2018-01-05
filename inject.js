@@ -1,12 +1,19 @@
+/**
+ * First check if there's already an instance of QAbot
+ * Second check if there's already a value for QAvisable
+ * 
+ * Else first instanciate a QAbot & secondly set QAvisible to false
+ */
 var qabot = qabot ? qabot : new QAbot(),
-    QActive = QActive ? true : false;
+    QAvisible = QAvisible ? true : false;
 
-if (!QActive) {
+/** 
+ * Simple toggle logic based on QAvisible value
+ */
+if (!QAvisible) {
     qabot.visability(1);
-    QActive = true;
+    QAvisible = true;
 } else {
     qabot.visability(0);
-    QActive = false;
+    QAvisible = false;
 }
-
-

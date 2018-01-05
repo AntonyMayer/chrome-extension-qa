@@ -55,12 +55,11 @@ class QAbot {
     }
 
     reset() {
-        window.QActive = false;
+        window.QAvisible = false;
         
         this.components.overlays.forEach(overlay => overlay.remove());
         this.components.overlays = [];
-
-        if (!this.components.overlays.length) this.buildOverlays();
+        this.buildOverlays();
     }
 
     onScreenResize() {
