@@ -5,11 +5,17 @@
  */
 class QAbot {
     constructor() {
+        // html elements
         this.components = {
             elements: [...document.querySelectorAll('[data-component]')],
             overlays: [] // overlay nodes, will be updated after 'this.buildOverlays' 
         }
+
+        // basic params
         this.palette = ['red', 'DarkBlue', 'OrangeRed', 'green', 'brown', 'FireBrick', 'GoldenRod'];
+        this.animationTiming = 400;
+
+        // building initial overlays
         this.buildOverlays();
         this.onViewPortChange();
     }
@@ -24,6 +30,7 @@ class QAbot {
         setTimeout(_ => {
             this.components.overlays.forEach(overlay => {
                 overlay.style.opacity = state;
+                overlay.style.transform = `scale(${state})`;
                 overlay.style.pointerEvents = state ? 'all' : 'none';
             });
         }, 0);
@@ -101,7 +108,8 @@ class QAbot {
             opacity: 0;
             position: fixed;
             top: ${params.top}px;
-            transition: all .4s;
+            transform: scale(1.2);
+            transition: all ${this.animationTiming/1000}s;
             min-width: ${params.width}px;
             z-index: 999;
         `);
@@ -111,16 +119,19 @@ class QAbot {
 
     /**
      * Destroys all overlays and builds new ones
+     * Set timeout used to let animation finish before destroying overlays 
      */
     reset() {
         this.visability(0);
 
-        window.QAvisible = false;
-        
-        this.components.overlays.forEach(overlay => overlay.remove());
-        this.components.overlays = [];
+        setTimeout(_=> {
+            window.QAvisible = false;
 
-        this.buildOverlays();
+            this.components.overlays.forEach(overlay => overlay.remove());
+            this.components.overlays = [];
+
+            this.buildOverlays();
+        }, this.animationTiming);
     }
 
     /**
