@@ -106,6 +106,7 @@ class QAbot {
             left: ${params.left}px;
             min-height: ${params.height}px;
             opacity: 0;
+            pointer-events: none;
             position: fixed;
             top: ${params.top}px;
             transform: scale(1.2);
