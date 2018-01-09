@@ -16,17 +16,18 @@ class QAbot {
         this.animationTiming = 400;
 
         // building initial overlays
-        this.buildOverlays();
         this.onViewPortChange();
     }
 
     /**
-     * Set components visability based on 'state' value
+     * Build and set components visability based on 'state' value
      * Using setTimeout to place it to the very end of queue => smooth css transition
      * 
      * @param {number} state visability value, "0" for invisible, "1" for visible
      */
     visability(state) {
+        if (state) this.buildOverlays();
+        
         setTimeout(_ => {
             this.components.overlays.forEach(overlay => {
                 overlay.style.opacity = state;
@@ -40,7 +41,7 @@ class QAbot {
      * Creates overlays for each 'component' and append them to body
      */
     buildOverlays() {
-        this.components.elements.forEach((elm, index) => this.components.overlays.push(this.singleOverlay(elm, index)));
+        this.components.elements.forEach((elm, index) => this.components.overlays.push(this.overlay(elm, index)));
         this.components.overlays.forEach(overlay => document.body.appendChild(overlay));
     }
 
@@ -50,7 +51,7 @@ class QAbot {
      * @param {object} elm node
      * @return {object} node
      */
-    singleOverlay(elm, index) {
+    overlay(elm, index) {
         let params = elm.getBoundingClientRect(),
             overlay = document.createElement('div'),
             description = document.createElement('div'),            
@@ -127,11 +128,8 @@ class QAbot {
 
         setTimeout(_=> {
             window.QAvisible = false;
-
             this.components.overlays.forEach(overlay => overlay.remove());
             this.components.overlays = [];
-
-            this.buildOverlays();
         }, this.animationTiming);
     }
 
