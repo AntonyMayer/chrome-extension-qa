@@ -14,6 +14,6 @@ if (!QAvisible) {
     qabot.visability(1);
     QAvisible = true;
 } else {
-    qabot.visability(0);
+    qabot.reset();
     QAvisible = false;
 }
