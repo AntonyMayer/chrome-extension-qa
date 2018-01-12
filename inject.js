@@ -1,15 +1,12 @@
 /**
- * First check if there's already an instance of QAbot
- * Second check if there's already a value for QAvisable
- * 
- * Else first instanciate a QAbot & secondly set QAvisible to false
+ * Check if QAbot declared
+ * Then check if there's already an instance of QAbot
+ * Finally check if there's already a value for QAvisable
  */
-var qabot = qabot ? qabot : new QAbot(),
+var qabot = qabot ? qabot : new QAbot([...document.querySelectorAll('[data-component]')]),
     QAvisible = QAvisible ? true : false;
 
-/** 
- * Simple toggle logic based on QAvisible value
- */
+// Simple toggle logic based on QAvisible value
 if (!QAvisible) {
     qabot.visability(1);
     QAvisible = true;
@@ -17,3 +14,4 @@ if (!QAvisible) {
     qabot.reset();
     QAvisible = false;
 }
+

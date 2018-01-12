@@ -4,6 +4,11 @@
 Highlights all `components` on current page.
 Displays component's **ID** and **Scope**.
 
+## Hotkey
+```
+Ctrl + Shift + F
+```
+
 ## Installation
 
 1. Clone repo
