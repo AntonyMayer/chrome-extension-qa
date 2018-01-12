@@ -4,12 +4,12 @@
  * @classdesc Find all 'components' on current page and create overlays
  */
 class QAbot {
-    constructor() {
+    constructor(components) {
         // html elements
         this.components = {
-            elements: [...document.querySelectorAll('[data-component]')],
+            elements: components,
             overlays: [] // overlay nodes, will be updated after 'this.buildOverlays' 
-        }
+        };
 
         // basic params
         this.palette = ['red', 'DarkBlue', 'OrangeRed', 'green', 'brown', 'FireBrick', 'GoldenRod'];
@@ -28,7 +28,7 @@ class QAbot {
     visability(state) {
         if (state) this.buildOverlays();
         
-        setTimeout(_ => {
+        setTimeout(() => {
             this.components.overlays.forEach(overlay => {
                 overlay.style.opacity = state;
                 overlay.style.transform = `scale(${state})`;
@@ -63,7 +63,7 @@ class QAbot {
         if (index >= this.palette.length) index = index % this.palette.length;
 
         // add hide functionality to btn
-        btn.onclick = _=> { overlay.remove() };
+        btn.onclick = ()=> {overlay.remove();};
 
         // add content
         description.innerHTML = `<b>ID:</b> ${id}<br> <b>Scope:</b> ${scope}`;
@@ -126,7 +126,7 @@ class QAbot {
     reset() {
         this.visability(0);
 
-        setTimeout(_=> {
+        setTimeout(()=> {
             window.QAvisible = false;
             this.components.overlays.forEach(overlay => overlay.remove());
             this.components.overlays = [];
