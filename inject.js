@@ -1,10 +1,10 @@
 /**
- * First check if there's already an instance of QAbot
- * Second check if there's already a value for QAvisable
- * 
- * Else first instanciate a QAbot & secondly set QAvisible to false
+ * Check if components are already selected
+ * Then check if there's already an instance of QAbot
+ * Finally check if there's already a value for QAvisable
  */
-var qabot = qabot ? qabot : new QAbot(),
+var components = components ? components : [...document.querySelectorAll('[data-component]')],
+    qabot = qabot ? qabot : new QAbot(components),
     QAvisible = QAvisible ? true : false;
 
 /** 
@@ -17,3 +17,4 @@ if (!QAvisible) {
     qabot.reset();
     QAvisible = false;
 }
+

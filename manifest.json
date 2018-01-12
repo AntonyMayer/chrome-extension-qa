@@ -16,13 +16,23 @@
                 "https://*/*"
             ],
             "js": [
-                "qabot.js"
+                "qabot.js",
+                "display.js"
             ]
         }
     ],
     "browser_action": {
         "default_icon": "./assets/icon.png",
-        "default_title": "For QA from Devs"
+        "default_title": "Ctrl+Shift+F"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+F",
+                "mac": "MacCtrl+Shift+F"
+            },
+            "description": "Highlight components"
+        }
     },
     "icons": {
         "16": "./assets/icon.png",
